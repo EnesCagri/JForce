@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import UserService from "../services/UserService";
-import TextInput from "./TextInput";
-import DropDownInput from "./DropDownInput";
+import UserService from "../../services/UserService";
+import TextInput from "../custom_components/TextInput";
+import DropDownInput from "../custom_components/DropDownInput";
 import { Button } from "flowbite-react";
+import { UserRole } from "../../services/data";
 
 const UserUpdate = () => {
   const [role, setRole] = useState("");
@@ -32,9 +33,13 @@ const UserUpdate = () => {
       password: password,
     };
 
-    UserService.updateUser(updatedUser, id).then(() => {
-      navigate("/admin");
-    });
+    UserService.updateUser(updatedUser, id)
+      .then(() => {
+        navigate("/admin");
+      })
+      .catch((error) => {
+        alert("HATA: Kullanıcı güncellenemedi!");
+      });
   };
 
   const cancel = () => {
@@ -56,7 +61,7 @@ const UserUpdate = () => {
                   name={"role"}
                   value={role}
                   func={setRole}
-                  options={["Rol", "İnsan Kaynakları", "Envanter Yöneticisi"]}
+                  options={["Rol", ...Object.values(UserRole)]}
                 />
 
                 <TextInput

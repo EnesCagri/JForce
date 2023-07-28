@@ -1,16 +1,24 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import EmployeeService from "../services/EmployeeService";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import EmployeeService from "../../services/EmployeeService";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import TextInput from "./TextInput";
-import DropDownInput from "./DropDownInput";
+import TextInput from "../custom_components/TextInput";
+import DropDownInput from "../custom_components/DropDownInput";
 import { Button } from "flowbite-react";
+import {
+  Department,
+  Gender,
+  GraduationStatus,
+  MartialStatus,
+  Position,
+  WorkingStatus,
+} from "../../services/data";
+import FileChooser from "../custom_components/FileChooser";
 
-const EmployeeUpdate = () => {
+const EmployeeForm = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [emailId, setEmailId] = useState("");
   const [tckn, setTckn] = useState("");
   const [birthdate, setBirthdate] = useState(null);
   const [gender, setGender] = useState("");
@@ -20,63 +28,40 @@ const EmployeeUpdate = () => {
   const [department, setDepartment] = useState("");
   const [field, setField] = useState("");
   const [picture, setPicture] = useState("");
+
   const [enteranceDate, setEnteranceDate] = useState(null);
-  const [enteranceDepartment, setEnteranceDepartment] = useState("");
-  const [enteranceMission, setEnteranceMission] = useState("");
-  const [leaveReason, setLeaveReason] = useState("");
-  const [leaveDate, setLeaveDate] = useState(null);
 
   const navigate = useNavigate();
-  const { id } = useParams();
 
-  useEffect(() => {
-    EmployeeService.getEmployeeById(id).then((res) => {
-      const employee = res.data;
-
-      setFirstName(employee.firstName);
-      setLastName(employee.lastName);
-      setEmailId(employee.emailId);
-      setTckn(employee.tckn);
-      setBirthdate(employee.birthdate);
-      setGender(employee.gender);
-      setMartialStatus(employee.martialStatus);
-      setGraduatedStatus(employee.isGraduated);
-      setDepartment(employee.department);
-      setField(employee.mission);
-      setPicture(employee.profilePic);
-      setEnteranceDepartment(employee.enteranceDepartment);
-      setEnteranceMission(employee.enteranceMission);
-      setLeaveReason(employee.leaveReason);
-      setLeaveDate(employee.leaveDate);
-    });
-  }, [id]);
-
-  const updateEmployee = (e) => {
+  const saveEmployee = (e) => {
     e.preventDefault();
 
-    const updatedEmployee = {
+    let employee = {
       firstName: firstName,
       lastName: lastName,
-      emailId: emailId,
       birthDate: birthdate,
       gender: gender,
-      maritalStatus: martialStatus,
-      isGraduated: graduatedStatus,
-      isWorking: "Çalışıyor",
+      martialStatus: martialStatus,
+      graduationStatus: graduatedStatus,
+      workingStatus: WorkingStatus.WORKING,
       department: department,
       mission: field,
       profilePic: picture,
       tckn: tckn,
       enteranceDate: enteranceDate,
-      enteranceMission: enteranceMission,
-      enteranceDepartment: enteranceDepartment,
-      leaveReason: leaveReason,
-      leaveDate: leaveDate,
+      enteranceMission: field,
+      enteranceDepartment: department,
+      leaveReason: "",
+      leaveDate: null,
     };
 
-    EmployeeService.updateEmployee(updatedEmployee, id).then(() => {
-      navigate("/employees");
-    });
+    EmployeeService.createEmployee(employee)
+      .then((res) => {
+        navigate("/employees");
+      })
+      .catch((error) => {
+        alert("HATA: Çalışan eklenemedi!");
+      });
   };
 
   const cancel = () => {
@@ -84,8 +69,7 @@ const EmployeeUpdate = () => {
   };
 
   const handleTcknChange = (e) => {
-    const input = e.target.value.replace(/\D/g, "").slice(0, 11);
-    setTckn(input);
+    setTckn(e.target.value.replace(/\D/g, "").slice(0, 11));
   };
 
   return (
@@ -94,17 +78,17 @@ const EmployeeUpdate = () => {
         <div className="row">
           <div className="card col-md-6 offset-md-3 ">
             <h3 className="text-center bg-gray-800 text-white py-2 inline-block">
-              Çalışanı Güncelle
+              Çalışan Ekle
             </h3>
             <div className="card-body">
-              <form onSubmit={updateEmployee}>
+              <form onSubmit={saveEmployee}>
                 <TextInput
                   label={"Ad"}
                   placeholder={"Adınızı giriniz"}
                   name={"firstName"}
                   func={setFirstName}
                   value={firstName}
-                  maxLength="50"
+                  maxLength={"50"}
                 />
 
                 <TextInput
@@ -113,15 +97,7 @@ const EmployeeUpdate = () => {
                   name={"lastName"}
                   func={setLastName}
                   value={lastName}
-                  maxLength="50"
-                />
-
-                <TextInput
-                  label={"E-mail"}
-                  placeholder={"E-mail adresinizi giriniz"}
-                  name={"emailID"}
-                  func={setEmailId}
-                  value={emailId}
+                  maxLength={"50"}
                 />
 
                 <div className="relative z-0 w-full mb-6 group">
@@ -161,7 +137,7 @@ const EmployeeUpdate = () => {
                   name={"gender"}
                   value={gender}
                   func={setGender}
-                  options={["Cinsiyet Seçiniz", "Erkek", "Kadın"]}
+                  options={["Cinsiyet Seçiniz", ...Object.values(Gender)]}
                 />
 
                 <DropDownInput
@@ -169,7 +145,10 @@ const EmployeeUpdate = () => {
                   name={"marital_status"}
                   value={martialStatus}
                   func={setMartialStatus}
-                  options={["Medeni Hal seçiniz", "Bekar", "Evli"]}
+                  options={[
+                    "Medeni Hal seçiniz",
+                    ...Object.values(MartialStatus),
+                  ]}
                 />
 
                 <DropDownInput
@@ -179,10 +158,7 @@ const EmployeeUpdate = () => {
                   func={setGraduatedStatus}
                   options={[
                     "Mezuniyet Durumu Seçiniz",
-                    "lisans",
-                    "ön-lisans",
-                    "yüksek lisans",
-                    "doktora",
+                    ...Object.values(GraduationStatus),
                   ]}
                 />
 
@@ -191,7 +167,7 @@ const EmployeeUpdate = () => {
                   name={"department"}
                   value={department}
                   func={setDepartment}
-                  options={["Departman Seçiniz", "Yazılım Geliştirici", "Arge"]}
+                  options={["Departman Seçiniz", ...Object.values(Department)]}
                 />
 
                 <DropDownInput
@@ -199,12 +175,7 @@ const EmployeeUpdate = () => {
                   name={"mission"}
                   value={field}
                   func={setField}
-                  options={[
-                    "Görev Seçiniz",
-                    "Yazılım Geliştirme Uzmanı",
-                    "Yönetmen Asistanı",
-                    "Yönetmen",
-                  ]}
+                  options={["Görev Seçiniz", ...Object.values(Position)]}
                 />
 
                 <div className="form-group">
@@ -221,23 +192,10 @@ const EmployeeUpdate = () => {
                   />
                 </div>
 
-                <div className="form-group">
-                  <label htmlFor="pictureField">Profil Fotoğrafı:</label>
-                  <input
-                    type="text"
-                    id="pictureField"
-                    className="form-control"
-                    placeholder="Profil Fotoğraf URL"
-                    value={picture}
-                    onChange={(e) => setPicture(e.target.value)}
-                  />
-                  <div className="flex justify-center">
-                    <img
-                      src={picture}
-                      alt="picture"
-                      className="object-contain w-[600px] h-[600px] mt-4 aspect-square"
-                    />
-                  </div>
+                <FileChooser onChange={(file) => setPicture(file)} />
+
+                <div>
+                  <img src={picture} alt="" />
                 </div>
 
                 <div className="mt-10 flex justify-center gap-2">
@@ -257,4 +215,4 @@ const EmployeeUpdate = () => {
   );
 };
 
-export default EmployeeUpdate;
+export default EmployeeForm;

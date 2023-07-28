@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import InfoCard from "./InfoCard";
-import InventoryService from "../services/InventoryService";
+import InfoCard from "../custom_components/InfoCard";
+import InventoryService from "../../services/InventoryService";
 
 const InventoryDetails = () => {
   const [inventory, setInventory] = useState({});

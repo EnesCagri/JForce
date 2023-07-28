@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import TextInput from "./TextInput";
-import logo from "../assets/logo.svg";
-import UserService from "../services/UserService";
+import TextInput from "../custom_components/TextInput";
+import logo from "../../assets/logo.svg";
+import UserService from "../../services/UserService";
 import { useNavigate } from "react-router-dom";
 
 const Login = ({ setUserRole }) => {
@@ -31,7 +31,7 @@ const Login = ({ setUserRole }) => {
         }
       })
       .catch((error) => {
-        console.error("Authentication failed:", error);
+        alert("HATA: Yanlış Kullanıcı Adı ya da Şifre!");
       });
   };
 
@@ -63,6 +63,7 @@ const Login = ({ setUserRole }) => {
                 func={setPassword}
                 value={password}
                 maxLength="50"
+                type="password"
               />
             </div>
             <div className="mt-8 flex justify-center text-lg text-black">

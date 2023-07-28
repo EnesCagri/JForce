@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import TextInput from "./TextInput";
-import DropDownInput from "./DropDownInput";
-import UserService from "../services/UserService";
+import TextInput from "../custom_components/TextInput";
+import DropDownInput from "../custom_components/DropDownInput";
+import UserService from "../../services/UserService";
 import { Button } from "flowbite-react";
+import { UserRole } from "../../services/data";
 
 const UserForm = () => {
   const [role, setRole] = useState("");
@@ -21,9 +22,13 @@ const UserForm = () => {
       password: password,
     };
 
-    UserService.createUser(user).then((res) => {
-      navigate("/admin");
-    });
+    UserService.createUser(user)
+      .then((res) => {
+        navigate("/admin");
+      })
+      .catch((error) => {
+        alert("HATA: Çalışan eklenemedi!");
+      });
   };
 
   const cancel = () => {
@@ -45,7 +50,7 @@ const UserForm = () => {
                   name={"role"}
                   value={role}
                   func={setRole}
-                  options={["Rol", "İnsan Kaynakları", "Envanter Yöneticisi"]}
+                  options={["Rol", ...Object.values(UserRole)]}
                 />
 
                 <TextInput

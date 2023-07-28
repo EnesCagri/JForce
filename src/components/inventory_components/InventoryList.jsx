@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import InventoryService from "../services/InventoryService";
+import InventoryService from "../../services/InventoryService";
 import { Form, InputGroup } from "react-bootstrap";
-import DataTable from "./DataTable";
+import DataTable from "../custom_components/DataTable";
 
 const InventoryList = () => {
   const [inventories, setInventories] = useState([]);
