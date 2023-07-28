@@ -1,34 +1,29 @@
 import "./App.css";
-import EmployeeDetails from "./components/EmployeeDetails";
-import EmployeeForm from "./components/EmployeeForm";
-import EmployeeList from "./components/EmployeeList";
-import EmployeeUpdate from "./components/EmployeeUpdate";
-import Home from "./components/Home";
-import Header from "./components/Header";
+import EmployeeDetails from "./components/employee_components/EmployeeDetails";
+import EmployeeForm from "./components/employee_components/EmployeeForm";
+import EmployeeList from "./components/employee_components/EmployeeList";
+import EmployeeUpdate from "./components/employee_components/EmployeeUpdate";
+import Home from "./components/pages/Home";
+import Header from "./components/custom_components/Header";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import InventoryList from "./components/InventoryList";
-import InventoryDetails from "./components/InventoryDetails";
-import InventoryForm from "./components/InventoryForm";
-import InventoryUpdate from "./components/InventoryUpdate";
-import EmployeeInventory from "./components/EmployeeInventory";
-import EmployeeResign from "./components/EmployeeResign";
+import InventoryList from "./components/inventory_components/InventoryList";
+import InventoryDetails from "./components/inventory_components/InventoryDetails";
+import InventoryForm from "./components/inventory_components/InventoryForm";
+import InventoryUpdate from "./components/inventory_components/InventoryUpdate";
+import EmployeeInventory from "./components/employee_components/EmployeeInventory";
+import EmployeeResign from "./components/employee_components/EmployeeResign";
 import AdminElement from "./components/private_routes/AdminElement";
 import IMElement from "./components/private_routes/IMElement";
 import HRElement from "./components/private_routes/HRElement";
-import UserList from "./components/UserList";
-import UserForm from "./components/UserForm";
-import UserDetails from "./components/UserDetails";
-import UserUpdate from "./components/UserUpdate";
-import Login from "./components/Login";
+import UserList from "./components/user_components/UserList";
+import UserForm from "./components/user_components/UserForm";
+import UserDetails from "./components/user_components/UserDetails";
+import UserUpdate from "./components/user_components/UserUpdate";
+import Login from "./components/pages/Login";
 import { React, useState, useEffect } from "react";
 import UserElement from "./components/private_routes/UserElement";
-import OldEmployees from "./components/OldEmployees";
-
-export const USER_ROLES = {
-  AD: "Admin",
-  HR: "İnsan Kaynakları",
-  IM: "Envanter Yöneticisi",
-};
+import OldEmployees from "./components/pages/OldEmployees";
+import { UserRole } from "./services/data";
 
 function App() {
   const [userRole, setUserRole] = useState("");

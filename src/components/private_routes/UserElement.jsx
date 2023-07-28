@@ -1,8 +1,11 @@
 import React from "react";
-import AccessPermited from "../AccessPermited";
+import AccessPermited from "../pages/AccessPermited";
+import { UserRole } from "../../services/data";
 
 const UserElement = ({ children, role }) => {
-  if (role !== "") {
+  const allowedRoles = [UserRole.AD, UserRole.HR, UserRole.IM];
+
+  if (allowedRoles.includes(role)) {
     return <div>{children}</div>;
   }
 

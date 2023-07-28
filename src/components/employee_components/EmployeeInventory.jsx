@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-
-import EmployeeService from "../services/EmployeeService";
-import InventoryService from "../services/InventoryService";
+import EmployeeService from "../../services/EmployeeService";
+import InventoryService from "../../services/InventoryService";
+import { InventoryStatus } from "../../services/data";
 
 const EmployeeInventory = () => {
   const [inventories, setInventories] = useState([]);
@@ -26,7 +26,7 @@ const EmployeeInventory = () => {
     InventoryService.getInventories().then((res) => {
       setAvailableInventories(
         res.data.filter(
-          (inventory) => inventory.status.toLowerCase() !== "personalde"
+          (inventory) => inventory.status !== InventoryStatus.USING
         )
       );
     });
@@ -143,13 +143,7 @@ const EmployeeInventory = () => {
                           <button
                             className="btn btn-info text-white rounded"
                             onClick={() => {
-                              if (working) {
-                                assignInventory(fInventory.id);
-                              } else {
-                                alert(
-                                  "Çalışmayan, eski çalışanlara envanter atayamazsınız"
-                                );
-                              }
+                              assignInventory(fInventory.id);
                             }}
                           >
                             Personele Ver

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import EmployeeService from "../services/EmployeeService";
+import EmployeeService from "../../services/EmployeeService";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import TextInput from "./TextInput";
+import TextInput from "../custom_components/TextInput";
 import { Button } from "flowbite-react";
 
 const EmployeeResign = () => {

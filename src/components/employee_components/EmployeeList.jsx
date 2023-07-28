@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import EmployeeService from "../services/EmployeeService";
+import EmployeeService from "../../services/EmployeeService";
 import { Form, InputGroup } from "react-bootstrap";
-import DataTable from "./DataTable";
+import DataTable from "../custom_components/DataTable";
+import { WorkingStatus } from "../../services/data";
 
-const OldEmployees = () => {
+const EmployeeList = () => {
   const [employees, setEmployees] = useState([]);
   const navigate = useNavigate();
   const [refreshList, setRefreshList] = useState(false);
@@ -12,6 +13,22 @@ const OldEmployees = () => {
 
   const handleSearch = (e) => {
     setSearch(e.target.value);
+  };
+
+  const addEmployee = () => {
+    navigate("/add-employee");
+  };
+
+  const editEmployee = (id) => {
+    navigate(`/update-employee/${id}`);
+  };
+
+  const viewEmployeeInventory = (id) => {
+    navigate(`/view-employee-inventory/${id}`);
+  };
+
+  const resignEmployee = (id) => {
+    navigate(`/resign-employee/${id}`);
   };
 
   const deleteEmployee = (id) => {
@@ -29,23 +46,21 @@ const OldEmployees = () => {
 
     if (searchTerms.length === 0) {
       return employees.filter(
-        (employee) => employee.isWorking === "Çalışmıyor"
+        (employee) => employee.workingStatus === WorkingStatus.WORKING
       );
     }
 
     return employees.filter((employee) => {
       return (
-        employee.isWorking === "Çalışmıyor" &&
+        employee.workingStatus === WorkingStatus.WORKING &&
         searchTerms.every((term) => {
           const searchTerm = term.trim();
-
           return (
             employee.firstName.toLowerCase().includes(searchTerm) ||
             employee.lastName.toLowerCase().includes(searchTerm) ||
             employee.tckn.toString().includes(searchTerm) ||
             employee.department.toLowerCase().includes(searchTerm) ||
-            employee.mission.toLowerCase().includes(searchTerm) ||
-            employees.isWorking === "Çalışmıyor"
+            employee.mission.toLowerCase().includes(searchTerm)
           );
         })
       );
@@ -74,6 +89,21 @@ const OldEmployees = () => {
       label: "Görüntüle",
     },
     {
+      actionFunction: editEmployee,
+      label: "Güncelle",
+      buttonStyle: "warning",
+    },
+    {
+      actionFunction: viewEmployeeInventory,
+      label: "Zimmetler",
+      buttonStyle: "success",
+    },
+    {
+      actionFunction: resignEmployee,
+      label: "Ayrıl",
+      buttonStyle: "dark",
+    },
+    {
       actionFunction: deleteEmployee,
       label: "Kaldır",
       buttonStyle: "failure",
@@ -82,13 +112,18 @@ const OldEmployees = () => {
 
   return (
     <div>
-      <h2 className="text-center mt-6 mb-4">Eski Çalışanlar Listesi</h2>
+      <h2 className="text-center mt-6 mb-4">Çalışanlar Listesi</h2>
+      <div className="row">
+        <button className="btn btn-primary" onClick={addEmployee}>
+          Yeni Çalışan Ekle
+        </button>
+      </div>
 
       <Form>
         <InputGroup className="my-3">
           <Form.Control
             onChange={handleSearch}
-            placeholder="Eski Çalışanlarda Ara (Ad-soyad, TC no, departman)"
+            placeholder="Çalışanlarda Ara (Ad-soyad, TC no, departman)"
             value={search}
           />
         </InputGroup>
@@ -110,4 +145,4 @@ const OldEmployees = () => {
   );
 };
 
-export default OldEmployees;
+export default EmployeeList;

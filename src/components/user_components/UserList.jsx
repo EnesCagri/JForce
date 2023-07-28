@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Form, InputGroup } from "react-bootstrap";
-import UserService from "../services/UserService";
-import DataTable from "./DataTable";
+import UserService from "../../services/UserService";
+import DataTable from "../custom_components/DataTable";
 
 const UserList = () => {
   const [users, setUsers] = useState([]);

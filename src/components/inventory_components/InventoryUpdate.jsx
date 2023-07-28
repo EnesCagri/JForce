@@ -1,14 +1,14 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import InventoryService from "../services/InventoryService";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import InventoryService from "../../services/InventoryService";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { types } from "../services/data";
-import TextInput from "./TextInput";
-import DropDownInput from "./DropDownInput";
+import { InventoryStatus, InventoryType } from "../../services/data";
+import TextInput from "../custom_components/TextInput";
+import DropDownInput from "../custom_components/DropDownInput";
 import { Button } from "flowbite-react";
 
-const InventoryForm = () => {
+const InventoryUpdate = () => {
   const [type, setType] = useState("");
   const [brand, setBrand] = useState("");
   const [model, setModel] = useState("");
@@ -18,11 +18,25 @@ const InventoryForm = () => {
   const [currentOwner, setCurrentOwner] = useState("");
 
   const navigate = useNavigate();
+  const { id } = useParams();
 
-  const saveInventory = (e) => {
+  useEffect(() => {
+    InventoryService.getInventoryById(id).then((res) => {
+      const inventory = res.data;
+
+      setType(inventory.type);
+      setBrand(inventory.brand);
+      setModel(inventory.model);
+      setStatus(inventory.status);
+      setLastOwner(inventory.lastOwner);
+      setCurrentOwner(inventory.currentOwner);
+    });
+  }, [id]);
+
+  const updateInventory = (e) => {
     e.preventDefault();
 
-    let inventory = {
+    const updatedInventory = {
       type: type,
       brand: brand,
       model: model,
@@ -32,9 +46,13 @@ const InventoryForm = () => {
       currentOwner: currentOwner,
     };
 
-    InventoryService.createInventory(inventory).then((res) => {
-      navigate("/inventories");
-    });
+    InventoryService.updateInventory(updatedInventory, id)
+      .then(() => {
+        navigate("/inventories");
+      })
+      .catch((error) => {
+        alert("HATA: Envanter güncellenemedi!");
+      });
   };
 
   const cancel = () => {
@@ -47,16 +65,19 @@ const InventoryForm = () => {
         <div className="row">
           <div className="card col-md-6 offset-md-3 ">
             <h3 className="text-center bg-gray-800 text-white py-2 inline-block">
-              Envanter Ekle
+              Envanter Güncelle
             </h3>
             <div className="card-body">
-              <form onSubmit={saveInventory}>
+              <form onSubmit={updateInventory}>
                 <DropDownInput
                   label={"Envanter Tipi"}
                   name={"type"}
                   value={type}
                   func={setType}
-                  options={types}
+                  options={[
+                    "Envanter Tipi Seçiniz",
+                    ...Object.values(InventoryType),
+                  ]}
                 />
 
                 <TextInput
@@ -65,6 +86,7 @@ const InventoryForm = () => {
                   name={"Envanter Markası"}
                   func={setBrand}
                   value={brand}
+                  maxLength={"25"}
                 />
 
                 <TextInput
@@ -73,6 +95,7 @@ const InventoryForm = () => {
                   name={"model"}
                   func={setModel}
                   value={model}
+                  maxLength={"25"}
                 />
 
                 <DropDownInput
@@ -82,9 +105,7 @@ const InventoryForm = () => {
                   func={setStatus}
                   options={[
                     "Envanter Statüsü",
-                    "Personalde",
-                    "Ofiste",
-                    "Depoda",
+                    ...Object.values(InventoryStatus),
                   ]}
                 />
 
@@ -102,7 +123,7 @@ const InventoryForm = () => {
                   />
                 </div>
 
-                <div className="mt-10 flex justify-center gap-2">
+                <div className="mt-10 flex justify-center">
                   <Button size="lg" type="submit">
                     Kaydet
                   </Button>
@@ -119,4 +140,4 @@ const InventoryForm = () => {
   );
 };
 
-export default InventoryForm;
+export default InventoryUpdate;

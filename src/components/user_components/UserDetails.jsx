@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import UserService from "../services/UserService";
-import InfoCard from "./InfoCard";
+import UserService from "../../services/UserService";
+import InfoCard from "../custom_components/InfoCard";
 
 const USerDetails = () => {
   const [user, setUser] = useState({});

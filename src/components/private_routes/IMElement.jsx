@@ -1,9 +1,9 @@
 import React from "react";
-import { USER_ROLES } from "../../App";
-import AccessPermited from "../AccessPermited";
+import { UserRole } from "../../services/data";
+import AccessPermited from "../pages/AccessPermited";
 
 const IMElement = ({ children, role }) => {
-  if (role === USER_ROLES.IM || role === USER_ROLES.AD) {
+  if (role === UserRole.IM || role === UserRole.AD) {
     return <div>{children}</div>;
   }
 

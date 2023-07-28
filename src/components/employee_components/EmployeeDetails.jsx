@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import EmployeeService from "../services/EmployeeService";
-import InfoCard from "./InfoCard";
+import EmployeeService from "../../services/EmployeeService";
+import { WorkingStatus } from "../../services/data";
 
 const EmployeeDetails = () => {
   const [employee, setEmployee] = useState({});
@@ -32,7 +32,7 @@ const EmployeeDetails = () => {
           <img
             className="object-cover h-32 object-center"
             src={
-              employee.profilePic !== ""
+              employee.profilePic === ""
                 ? employee.profilePic
                 : "https://i.pinimg.com/originals/7d/34/d9/7d34d9d53640af5cfd2614c57dfa7f13.png"
             }
@@ -52,10 +52,7 @@ const EmployeeDetails = () => {
             <li className="font-bold">
               Sicil No: <span className="font-thin">{employee.id}</span>
             </li>
-            <li className="font-bold">
-              Email Adresi:{" "}
-              <span className="font-thin">{employee.emailId}</span>
-            </li>
+
             <li className="font-bold">
               TC Kimlik No: <span className="font-thin">{employee.tckn}</span>
             </li>
@@ -66,18 +63,22 @@ const EmployeeDetails = () => {
               Doğum Tarihi:{" "}
               <span className="font-thin">{employee.birthDate}</span>
             </li>
+            <li className="font-bold">
+              Medeni Durum:{" "}
+              <span className="font-thin">{employee.martialStatus}</span>
+            </li>
             <li>
               <span className="text-gray-800 font-extrabold">
                 Çalışma Durumu:{" "}
               </span>
               <span
                 className={
-                  employee.isWorking === "Çalışmıyor"
+                  employee.workingStatus === WorkingStatus.NOT_WORKING
                     ? "text-red-500"
                     : "text-green-500"
                 }
               >
-                {employee.isWorking}
+                {employee.workingStatus}
               </span>
             </li>
 
@@ -86,7 +87,7 @@ const EmployeeDetails = () => {
                 {"Mezuniyet Durumu: "}{" "}
               </span>
               <span className="text-gray-500 font-thin">
-                {employee.isGraduated}{" "}
+                {employee.graduationStatus}{" "}
               </span>
             </li>
 
@@ -117,7 +118,7 @@ const EmployeeDetails = () => {
               </span>
             </li>
 
-            {employee.isWorking === "Çalışmıyor" && (
+            {employee.workingStatus === WorkingStatus.NOT_WORKING && (
               <li>
                 <span className="text-gray-800 font-extrabold">
                   {"İşten Ayrılma Tarihi: "}{" "}
@@ -128,7 +129,7 @@ const EmployeeDetails = () => {
               </li>
             )}
 
-            {employee.isWorking === "Çalışmıyor" && (
+            {employee.workingStatus === WorkingStatus.NOT_WORKING && (
               <li>
                 <span className="text-gray-800 font-extrabold">
                   {"Ayrılma Nedeni: "}{" "}

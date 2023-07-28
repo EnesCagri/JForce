@@ -1,9 +1,9 @@
 import React from "react";
-import inventoryLogo from "../assets/inventoryLogo.png";
-import staffLogo from "../assets/staffLogo.png";
-import manager from "../assets/manager.png";
-import disk from "../assets/disk.png";
-import UserPanel from "./UserPanel";
+import inventoryLogo from "../../assets/inventoryLogo.png";
+import staffLogo from "../../assets/staffLogo.png";
+import manager from "../../assets/manager.png";
+import disk from "../../assets/disk.png";
+import UserPanel from "../user_components/UserPanel";
 
 const Home = () => {
   return (
