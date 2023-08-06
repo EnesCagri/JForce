@@ -25,12 +25,7 @@ class EmployeeService {
 
   addInventoryToEmployee(employeeId, inventoryId) {
     return axios.post(
-      EMPLOYEE_API_BASE_URL +
-        "/" +
-        employeeId +
-        "/" +
-        "inventories/" +
-        inventoryId
+      EMPLOYEE_API_BASE_URL + "/" + employeeId + "/inventories/" + inventoryId
     );
   }
 

@@ -1,52 +1,63 @@
 export const InventoryType = {
-  CAR: "CAR",
-  MOUSE: "MOUSE",
-  KEYBOARD: "KEYBOARD",
-  DISK: "DISK",
-  MONITOR: "MONITOR",
+  CAR: { value: "CAR", label: "Araba" },
+  MOUSE: { value: "MOUSE", label: "Mouse" },
+  KEYBOARD: { value: "KEYBOARD", label: "Klavye" },
+  DISK: { value: "DISK", label: "Disk" },
+  MONITOR: { value: "MONITOR", label: "Monitör" },
 };
 
 export const InventoryStatus = {
-  DEPOT: "DEPOT",
-  USING: "USING",
-  OFFICE: "OFFICE",
+  DEPOT: { value: "DEPOT", label: "Depo" },
+  USING: { value: "USING", label: "Personelde" },
+  OFFICE: { value: "OFFICE", label: "Ofiste" },
+};
+
+export const AvailableInventoryStatus = {
+  DEPOT: { value: "DEPOT", label: "Depo" },
+  OFFICE: { value: "OFFICE", label: "Ofiste" },
 };
 
 export const Gender = {
-  MALE: "MALE",
-  FEMALE: "FEMALE",
+  MALE: { value: "MALE", label: "Erkek" },
+  FEMALE: { value: "FEMALE", label: "Kadın" },
 };
 
 export const GraduationStatus = {
-  ASSOCIATE: "ASSOCIATE",
-  BACHELOR: "BACHELOR",
-  GRADUATE: "GRADUATE",
-  DOCTORATE: "DOCTORATE",
+  ASSOCIATE: { value: "ASSOCIATE", label: "Ön lisans" },
+  BACHELOR: { value: "BACHELOR", label: "Lisans" },
+  GRADUATE: { value: "GRADUATE", label: "Yüksek lisans" },
+  DOCTORATE: { value: "DOCTORATE", label: "Doktora" },
 };
 
 export const Department = {
-  SOFTWARE: "SOFTWARE",
-  ARGE: "ARGE",
+  SOFTWARE: { value: "SOFTWARE", label: "Yazılım Geliştirme" },
+  ARGE: { value: "ARGE", label: "ARGE" },
 };
 
 export const Position = {
-  DEVELOPER: "DEVELOPER",
-  ASSISTANT: "ASSISTANT",
-  CHIEF: "CHIEF",
+  DEVELOPER: { value: "DEVELOPER", label: "Yazılım Geliştirme Uzmanı" },
+  ASSISTANT: { value: "ASSISTANT", label: "Yönetici Asistanı" },
+  CHIEF: { value: "CHIEF", label: "Yönetici" },
 };
 
 export const MartialStatus = {
-  SINGLE: "SINGLE",
-  MARRIED: "MARRIED",
+  SINGLE: { value: "SINGLE", label: "Bekar" },
+  MARRIED: { value: "MARRIED", label: "Evli" },
 };
 
 export const WorkingStatus = {
-  WORKING: "WORKING",
-  NOT_WORKING: "NOT_WORKING",
+  WORKING: { value: "WORKING", label: "Çalışıyor" },
+  NOT_WORKING: { value: "NOT_WORKING", label: "Çalışmıyor" },
 };
 
 export const UserRole = {
   AD: "ADMIN",
   HR: "HR",
   IM: "IM",
+};
+
+export const mapLabelToEnumValue = (label, enumObj) => {
+  const enumValues = Object.values(enumObj);
+  const enumValue = enumValues.find((value) => value.label === label);
+  return enumValue ? enumValue.value : "";
 };

@@ -8,7 +8,6 @@ const EmployeeInventory = () => {
   const [inventories, setInventories] = useState([]);
   const [availableInventories, setAvailableInventories] = useState([]);
   const [refreshList, setRefreshList] = useState(false);
-  const [working, setWorking] = useState(true);
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -17,16 +16,10 @@ const EmployeeInventory = () => {
       setInventories(res.data);
     });
 
-    EmployeeService.getEmployeeById(id).then((res) => {
-      if (res.data.isWorking === "Çalışmıyor") {
-        setWorking(false);
-      }
-    });
-
-    InventoryService.getInventories().then((res) => {
+    InventoryService.getAvailableInventories().then((res) => {
       setAvailableInventories(
         res.data.filter(
-          (inventory) => inventory.status !== InventoryStatus.USING
+          (inventory) => inventory.status !== InventoryStatus.USING.label
         )
       );
     });
@@ -51,7 +44,7 @@ const EmployeeInventory = () => {
   };
 
   const viewInventory = (inventoryId) => {
-    navigate(`/view-inventory/${id}`);
+    navigate(`/view-inventory/${inventoryId}`);
   };
 
   return (

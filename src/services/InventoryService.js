@@ -7,6 +7,10 @@ class InventoryService {
     return axios.get(EMPLOYEE_API_BASE_URL);
   }
 
+  getAvailableInventories() {
+    return axios.get(EMPLOYEE_API_BASE_URL + "/details");
+  }
+
   createInventory(inventory) {
     return axios.post(EMPLOYEE_API_BASE_URL, inventory);
   }

@@ -5,6 +5,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import TextInput from "../custom_components/TextInput";
 import { Button } from "flowbite-react";
+import CustomDatePicker from "../custom_components/CustomDatePicker";
 
 const EmployeeResign = () => {
   const [firstName, setFirstName] = useState("");
@@ -89,19 +90,12 @@ const EmployeeResign = () => {
                   onChange={(e) => setLeaveReason(e.target.value)}
                 ></textarea>
 
-                <div className="form-group">
-                  <label htmlFor="leaveDate">Ayrılma Tarihi:</label>
-                  <br></br>
-                  <DatePicker
-                    id="leaveDate"
-                    selected={leaveDate}
-                    onChange={(date) => setLeaveDate(date)}
-                    className="form-control"
-                    dateFormat="dd/MM/yyyy"
-                    required
-                    placeholderText="Ayrılma tarihi seçiniz"
-                  />
-                </div>
+                <CustomDatePicker
+                  label={"leaveDate"}
+                  placeholder={"Ayrılma Tarihi"}
+                  value={leaveDate}
+                  func={setLeaveDate}
+                />
 
                 <div className="mt-10 flex justify-center gap-2">
                   <Button size="lg" type="submit">

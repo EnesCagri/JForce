@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import EmployeeService from "../../services/EmployeeService";
 import { WorkingStatus } from "../../services/data";
+import DetailCard from "../custom_components/DetailCard";
 
 const EmployeeDetails = () => {
   const [employee, setEmployee] = useState({});
@@ -32,7 +33,7 @@ const EmployeeDetails = () => {
           <img
             className="object-cover h-32 object-center"
             src={
-              employee.profilePic === ""
+              employee.profilePic
                 ? employee.profilePic
                 : "https://i.pinimg.com/originals/7d/34/d9/7d34d9d53640af5cfd2614c57dfa7f13.png"
             }
@@ -43,37 +44,42 @@ const EmployeeDetails = () => {
           <h2 className="font-semibold">
             {employee.firstName} {employee.lastName}{" "}
           </h2>
-          <p className="text-gray-500 ">{employee.mission}</p>
+          <p className="text-gray-500 mb-0">{employee.mission}</p>
           <p className="text-gray-500 font-bold ">{employee.department}</p>
         </div>
 
         <div className="flex justify-center">
           <ul>
-            <li className="font-bold">
-              Sicil No: <span className="font-thin">{employee.id}</span>
-            </li>
+            <DetailCard label={"Sicil No"} value={employee.id} />
+            <DetailCard label={"TC Kimlik No"} value={employee.tckn} />
+            <DetailCard label={"Cinsiyet"} value={employee.gender} />
+            <DetailCard label={"Doğum Tarihi"} value={employee.birthDate} />
+            <DetailCard label={"Medeni Durum"} value={employee.martialStatus} />
+            <DetailCard
+              label={"Mezuniyet Durumu"}
+              value={employee.graduationStatus}
+            />
 
-            <li className="font-bold">
-              TC Kimlik No: <span className="font-thin">{employee.tckn}</span>
-            </li>
-            <li className="font-bold">
-              Cinsiyet: <span className="font-thin">{employee.gender}</span>
-            </li>
-            <li className="font-bold">
-              Doğum Tarihi:{" "}
-              <span className="font-thin">{employee.birthDate}</span>
-            </li>
-            <li className="font-bold">
-              Medeni Durum:{" "}
-              <span className="font-thin">{employee.martialStatus}</span>
-            </li>
+            <DetailCard
+              label={"İşe giriş Tarihi"}
+              value={employee.enteranceDate}
+            />
+            <DetailCard
+              label={"İşe giriş Departmanı"}
+              value={employee.enteranceDepartment}
+            />
+            <DetailCard
+              label={"İşe giriş Görevi"}
+              value={employee.enteranceMission}
+            />
+
             <li>
-              <span className="text-gray-800 font-extrabold">
+              <span className="text-gray-800 font-semibold">
                 Çalışma Durumu:{" "}
               </span>
               <span
                 className={
-                  employee.workingStatus === WorkingStatus.NOT_WORKING
+                  employee.workingStatus === WorkingStatus.NOT_WORKING.label
                     ? "text-red-500"
                     : "text-green-500"
                 }
@@ -82,45 +88,9 @@ const EmployeeDetails = () => {
               </span>
             </li>
 
-            <li>
-              <span className="text-gray-800 font-extrabold">
-                {"Mezuniyet Durumu: "}{" "}
-              </span>
-              <span className="text-gray-500 font-thin">
-                {employee.graduationStatus}{" "}
-              </span>
-            </li>
-
-            <li>
-              <span className="text-gray-800 font-extrabold">
-                {"İşe giriş Tarihi: "}{" "}
-              </span>
-              <span className="text-gray-500 font-thin">
-                {employee.enteranceDate}{" "}
-              </span>
-            </li>
-
-            <li>
-              <span className="text-gray-800 font-extrabold">
-                {"İşe giriş Departmanı: "}{" "}
-              </span>
-              <span className="text-gray-500 font-thin">
-                {employee.enteranceDepartment}{" "}
-              </span>
-            </li>
-
-            <li>
-              <span className="text-gray-800 font-extrabold">
-                {"İşe giriş Görevi: "}{" "}
-              </span>
-              <span className="text-gray-500 font-thin">
-                {employee.enteranceMission}{" "}
-              </span>
-            </li>
-
-            {employee.workingStatus === WorkingStatus.NOT_WORKING && (
+            {employee.workingStatus === WorkingStatus.NOT_WORKING.label && (
               <li>
-                <span className="text-gray-800 font-extrabold">
+                <span className="text-gray-800 font-semibold">
                   {"İşten Ayrılma Tarihi: "}{" "}
                 </span>
                 <span className="text-gray-500 font-thin">
@@ -129,14 +99,14 @@ const EmployeeDetails = () => {
               </li>
             )}
 
-            {employee.workingStatus === WorkingStatus.NOT_WORKING && (
+            {employee.workingStatus === WorkingStatus.NOT_WORKING.label && (
               <li>
-                <span className="text-gray-800 font-extrabold">
+                <span className="text-gray-800 font-semibold">
                   {"Ayrılma Nedeni: "}{" "}
                 </span>
-                <span className="text-gray-500 font-thin">
+                <p className="text-gray-500 font-thin">
                   {employee.leaveReason}{" "}
-                </span>
+                </p>
               </li>
             )}
           </ul>

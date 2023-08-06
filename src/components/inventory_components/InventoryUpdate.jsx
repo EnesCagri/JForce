@@ -3,10 +3,16 @@ import { useNavigate, useParams } from "react-router-dom";
 import InventoryService from "../../services/InventoryService";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { InventoryStatus, InventoryType } from "../../services/data";
+import {
+  InventoryType,
+  AvailableInventoryStatus,
+  mapLabelToEnumValue,
+  InventoryStatus,
+} from "../../services/data";
 import TextInput from "../custom_components/TextInput";
 import DropDownInput from "../custom_components/DropDownInput";
 import { Button } from "flowbite-react";
+import CustomDatePicker from "../custom_components/CustomDatePicker";
 
 const InventoryUpdate = () => {
   const [type, setType] = useState("");
@@ -24,12 +30,15 @@ const InventoryUpdate = () => {
     InventoryService.getInventoryById(id).then((res) => {
       const inventory = res.data;
 
-      setType(inventory.type);
+      setType(mapLabelToEnumValue(inventory.type, InventoryType));
       setBrand(inventory.brand);
       setModel(inventory.model);
-      setStatus(inventory.status);
+      setStatus(
+        mapLabelToEnumValue(inventory.status, AvailableInventoryStatus)
+      );
       setLastOwner(inventory.lastOwner);
       setCurrentOwner(inventory.currentOwner);
+      setDate(new Date(inventory.date));
     });
   }, [id]);
 
@@ -75,7 +84,7 @@ const InventoryUpdate = () => {
                   value={type}
                   func={setType}
                   options={[
-                    "Envanter Tipi Seçiniz",
+                    { value: "", label: "Envanter Tipi Seçiniz" },
                     ...Object.values(InventoryType),
                   ]}
                 />
@@ -98,30 +107,17 @@ const InventoryUpdate = () => {
                   maxLength={"25"}
                 />
 
-                <DropDownInput
-                  label={"Envanter Statüsü"}
-                  name={"status"}
-                  value={status}
-                  func={setStatus}
-                  options={[
-                    "Envanter Statüsü",
-                    ...Object.values(InventoryStatus),
-                  ]}
+                <CustomDatePicker
+                  value={date}
+                  placeholder={"Alınış Tarihi seçiniz"}
+                  label={"Alınış Tarihi"}
+                  func={setDate}
+                  minDate={
+                    new Date(
+                      new Date().setFullYear(new Date().getFullYear() - 10)
+                    )
+                  }
                 />
-
-                <div className="form-group">
-                  <label htmlFor="date">Alınış Tarihi:</label>
-                  <br></br>
-                  <DatePicker
-                    id="date"
-                    selected={date}
-                    onChange={(date) => setDate(date)}
-                    className="form-control"
-                    dateFormat="dd/MM/yyyy"
-                    required
-                    placeholderText="Alınış Tarihi"
-                  />
-                </div>
 
                 <div className="mt-10 flex justify-center">
                   <Button size="lg" type="submit">

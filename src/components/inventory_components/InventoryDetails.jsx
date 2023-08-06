@@ -25,10 +25,6 @@ const InventoryDetails = () => {
           Envanter Bilgileri
         </h3>
         <div className="card-body">
-          <div className="">
-            <img className="rounded-[10px]" src={inventory.profilePic} alt="" />
-          </div>
-
           <div className="mx-8 mt-4">
             <InfoCard title={"Seri No: "} content={inventory.id} />
             <InfoCard title={"Envanter Tipi: "} content={inventory.type} />

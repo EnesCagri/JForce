@@ -6,7 +6,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import TextInput from "../custom_components/TextInput";
 import DropDownInput from "../custom_components/DropDownInput";
 import { Button } from "flowbite-react";
-import { InventoryStatus, InventoryType } from "../../services/data";
+import { AvailableInventoryStatus, InventoryType } from "../../services/data";
+import CustomDatePicker from "../custom_components/CustomDatePicker";
 
 const InventoryForm = () => {
   const [type, setType] = useState("");
@@ -61,7 +62,7 @@ const InventoryForm = () => {
                   value={type}
                   func={setType}
                   options={[
-                    "Envanter Tipi Seçiniz",
+                    { value: "", label: "Envanter Tipi Seçiniz" },
                     ...Object.values(InventoryType),
                   ]}
                 />
@@ -90,24 +91,22 @@ const InventoryForm = () => {
                   value={status}
                   func={setStatus}
                   options={[
-                    "Envanter Statüsü",
-                    ...Object.values(InventoryStatus),
+                    { value: "", label: "Envanter Statüsü Seçiniz" },
+                    ...Object.values(AvailableInventoryStatus),
                   ]}
                 />
 
-                <div className="form-group">
-                  <label htmlFor="date">Alınış Tarihi:</label>
-                  <br></br>
-                  <DatePicker
-                    id="date"
-                    selected={date}
-                    onChange={(date) => setDate(date)}
-                    className="form-control"
-                    dateFormat="dd/MM/yyyy"
-                    required
-                    placeholderText="Alınış Tarihi"
-                  />
-                </div>
+                <CustomDatePicker
+                  value={date}
+                  placeholder={"Alınış Tarihi seçiniz"}
+                  label={"Alınış Tarihi"}
+                  func={setDate}
+                  minDate={
+                    new Date(
+                      new Date().setFullYear(new Date().getFullYear() - 10)
+                    )
+                  }
+                />
 
                 <div className="mt-10 flex justify-center gap-2">
                   <Button size="lg" type="submit">

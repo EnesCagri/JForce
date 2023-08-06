@@ -30,13 +30,13 @@ const OldEmployees = () => {
 
     if (searchTerms.length === 0) {
       return employees.filter(
-        (employee) => employee.workingStatus === WorkingStatus.NOT_WORKING
+        (employee) => employee.workingStatus === WorkingStatus.NOT_WORKING.label
       );
     }
 
     return employees.filter((employee) => {
       return (
-        employee.workingStatus === WorkingStatus.NOT_WORKING &&
+        employee.workingStatus === WorkingStatus.NOT_WORKING.label &&
         searchTerms.every((term) => {
           const searchTerm = term.trim();
 
@@ -46,7 +46,7 @@ const OldEmployees = () => {
             employee.tckn.toString().includes(searchTerm) ||
             employee.department.toLowerCase().includes(searchTerm) ||
             employee.mission.toLowerCase().includes(searchTerm) ||
-            employee.workingStatus === WorkingStatus.NOT_WORKING
+            employee.workingStatus === WorkingStatus.NOT_WORKING.label
           );
         })
       );

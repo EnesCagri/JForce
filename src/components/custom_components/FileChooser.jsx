@@ -1,9 +1,17 @@
 import React from "react";
 
-const FileChooser = ({ onChange }) => {
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    onChange(file);
+const FileChooser = ({ setImage }) => {
+  const convertToBase64 = (e) => {
+    let reader = new FileReader();
+    reader.readAsDataURL(e.target.files[0]);
+    reader.onload = () => {
+      console.log(reader.result);
+      setImage(reader.result);
+    };
+
+    reader.onerror = (error) => {
+      console.log("Error: ", error);
+    };
   };
 
   return (
@@ -15,8 +23,9 @@ const FileChooser = ({ onChange }) => {
         >
           <div className="flex flex-col items-center justify-center pt-5 pb-6">
             <p className="mb-2 text-sm text-gray-500 ">
-              <span className="font-semibold">Yüklemek için tıkla</span> ya da
-              sürükle bırak
+              <span className="font-semibold">
+                Fotoğraf Yüklemek için tıkla
+              </span>{" "}
             </p>
             <p className="text-xs text-gray-500 dark:text-gray-400">
               PNG veya JPG
@@ -26,7 +35,7 @@ const FileChooser = ({ onChange }) => {
             id="dropzone-file"
             type="file"
             accept=".png, .jpg, .jpeg"
-            onChange={handleImageChange}
+            onChange={convertToBase64}
             className="hidden"
           />
         </label>

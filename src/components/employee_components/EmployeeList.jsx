@@ -46,13 +46,13 @@ const EmployeeList = () => {
 
     if (searchTerms.length === 0) {
       return employees.filter(
-        (employee) => employee.workingStatus === WorkingStatus.WORKING
+        (employee) => employee.workingStatus === WorkingStatus.WORKING.label
       );
     }
 
     return employees.filter((employee) => {
       return (
-        employee.workingStatus === WorkingStatus.WORKING &&
+        employee.workingStatus === WorkingStatus.WORKING.label &&
         searchTerms.every((term) => {
           const searchTerm = term.trim();
           return (

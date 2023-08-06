@@ -15,6 +15,7 @@ import {
   WorkingStatus,
 } from "../../services/data";
 import FileChooser from "../custom_components/FileChooser";
+import CustomDatePicker from "../custom_components/CustomDatePicker";
 
 const EmployeeForm = () => {
   const [firstName, setFirstName] = useState("");
@@ -43,7 +44,7 @@ const EmployeeForm = () => {
       gender: gender,
       martialStatus: martialStatus,
       graduationStatus: graduatedStatus,
-      workingStatus: WorkingStatus.WORKING,
+      workingStatus: WorkingStatus.WORKING.value,
       department: department,
       mission: field,
       profilePic: picture,
@@ -118,81 +119,92 @@ const EmployeeForm = () => {
                   </label>
                 </div>
 
-                <div className="form-group">
-                  <label htmlFor="birthdate">Doğum Tarihi:</label>
-                  <br></br>
-                  <DatePicker
-                    id="birthdate"
-                    selected={birthdate}
-                    onChange={(date) => setBirthdate(date)}
-                    className="form-control"
-                    dateFormat="dd/MM/yyyy"
-                    required
-                    placeholderText="Doğum tarihi seçiniz"
+                <div className="grid grid-cols-2 gap-2 pb-2">
+                  <CustomDatePicker
+                    label={"birthdate"}
+                    value={birthdate}
+                    placeholder={"Doğum tarihi"}
+                    func={setBirthdate}
+                    minDate={
+                      new Date(
+                        new Date().setFullYear(new Date().getFullYear() - 10)
+                      )
+                    }
+                  />
+
+                  <CustomDatePicker
+                    label={"enteranceDate"}
+                    value={enteranceDate}
+                    placeholder={"İşe Giriş Tarihi"}
+                    func={setEnteranceDate}
+                    minDate={
+                      new Date(
+                        new Date().setFullYear(new Date().getFullYear() - 10)
+                      )
+                    }
                   />
                 </div>
 
-                <DropDownInput
-                  label={"Cinsiyet"}
-                  name={"gender"}
-                  value={gender}
-                  func={setGender}
-                  options={["Cinsiyet Seçiniz", ...Object.values(Gender)]}
-                />
+                <div className="grid grid-cols-2 gap-2 pb-2">
+                  <DropDownInput
+                    label={"Cinsiyet"}
+                    name={"gender"}
+                    value={gender}
+                    func={setGender}
+                    options={[
+                      { value: "", label: "Cinsiyet Seçiniz" },
+                      ...Object.values(Gender),
+                    ]}
+                  />
 
-                <DropDownInput
-                  label={"Medeni Durum"}
-                  name={"marital_status"}
-                  value={martialStatus}
-                  func={setMartialStatus}
-                  options={[
-                    "Medeni Hal seçiniz",
-                    ...Object.values(MartialStatus),
-                  ]}
-                />
+                  <DropDownInput
+                    label={"Medeni Durum"}
+                    name={"marital_status"}
+                    value={martialStatus}
+                    func={setMartialStatus}
+                    options={[
+                      { value: "", label: "Medeni Hal Seçiniz" },
+                      ...Object.values(MartialStatus),
+                    ]}
+                  />
+                </div>
 
-                <DropDownInput
-                  label={"Mezuniyet Durumu"}
-                  name={"graduation_status"}
-                  value={graduatedStatus}
-                  func={setGraduatedStatus}
-                  options={[
-                    "Mezuniyet Durumu Seçiniz",
-                    ...Object.values(GraduationStatus),
-                  ]}
-                />
+                <div className="grid grid-cols-2 gap-2 pb-2">
+                  <DropDownInput
+                    label={"Mezuniyet Durumu"}
+                    name={"graduation_status"}
+                    value={graduatedStatus}
+                    func={setGraduatedStatus}
+                    options={[
+                      { value: "", label: "Mezuniyet Durumu Seçiniz" },
+                      ...Object.values(GraduationStatus),
+                    ]}
+                  />
 
-                <DropDownInput
-                  label={"Departman"}
-                  name={"department"}
-                  value={department}
-                  func={setDepartment}
-                  options={["Departman Seçiniz", ...Object.values(Department)]}
-                />
+                  <DropDownInput
+                    label={"Departman"}
+                    name={"department"}
+                    value={department}
+                    func={setDepartment}
+                    options={[
+                      { value: "", label: "Departman Seçiniz" },
+                      ...Object.values(Department),
+                    ]}
+                  />
+                </div>
 
                 <DropDownInput
                   label={"Görev"}
                   name={"mission"}
                   value={field}
                   func={setField}
-                  options={["Görev Seçiniz", ...Object.values(Position)]}
+                  options={[
+                    { value: "", label: "Görev Seçiniz" },
+                    ...Object.values(Position),
+                  ]}
                 />
 
-                <div className="form-group">
-                  <label htmlFor="enteranceDate">İşe Giriş Tarihi:</label>
-                  <br></br>
-                  <DatePicker
-                    id="enteranceDate"
-                    selected={enteranceDate}
-                    onChange={(date) => setEnteranceDate(date)}
-                    className="form-control"
-                    dateFormat="dd/MM/yyyy"
-                    required
-                    placeholderText="İşe giriş tarihi seçiniz"
-                  />
-                </div>
-
-                <FileChooser onChange={(file) => setPicture(file)} />
+                <FileChooser setImage={setPicture} />
 
                 <div>
                   <img src={picture} alt="" />

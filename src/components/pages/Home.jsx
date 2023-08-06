@@ -7,7 +7,7 @@ import UserPanel from "../user_components/UserPanel";
 
 const Home = () => {
   return (
-    <div className="flex flex-col md:flex-row gap-4 justify-center py-4 px-2">
+    <div className="flex flex-col md:flex-row gap-4 justify-center py-4 px-2 ">
       <UserPanel
         title={"Yönetici Paneli"}
         path={"/admin"}

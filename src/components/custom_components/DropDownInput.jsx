@@ -17,9 +17,9 @@ const DropDownInput = ({ label, name, value, func, options }) => {
           required
           onChange={(e) => func(e.target.value)}
         >
-          {options.map((option, index) => (
-            <option key={index} value={index === 0 ? "" : option}>
-              {option}
+          {options.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
             </option>
           ))}
         </select>
