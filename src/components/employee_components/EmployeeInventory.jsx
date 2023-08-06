@@ -19,7 +19,11 @@ const EmployeeInventory = () => {
     InventoryService.getAvailableInventories().then((res) => {
       setAvailableInventories(
         res.data.filter(
+<<<<<<< HEAD
           (inventory) => inventory.status !== InventoryStatus.USING.label
+=======
+          (inventory) => inventory.status !== InventoryStatus.USING
+>>>>>>> f3bd58c72ddc1afb64ecf399f329c302b670708d
         )
       );
     });

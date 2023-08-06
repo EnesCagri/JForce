@@ -3,12 +3,16 @@ import { useNavigate, useParams } from "react-router-dom";
 import InventoryService from "../../services/InventoryService";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+<<<<<<< HEAD
 import {
   InventoryType,
   AvailableInventoryStatus,
   mapLabelToEnumValue,
   InventoryStatus,
 } from "../../services/data";
+=======
+import { InventoryStatus, InventoryType } from "../../services/data";
+>>>>>>> f3bd58c72ddc1afb64ecf399f329c302b670708d
 import TextInput from "../custom_components/TextInput";
 import DropDownInput from "../custom_components/DropDownInput";
 import { Button } from "flowbite-react";
@@ -84,7 +88,11 @@ const InventoryUpdate = () => {
                   value={type}
                   func={setType}
                   options={[
+<<<<<<< HEAD
                     { value: "", label: "Envanter Tipi Seçiniz" },
+=======
+                    "Envanter Tipi Seçiniz",
+>>>>>>> f3bd58c72ddc1afb64ecf399f329c302b670708d
                     ...Object.values(InventoryType),
                   ]}
                 />
@@ -107,6 +115,7 @@ const InventoryUpdate = () => {
                   maxLength={"25"}
                 />
 
+<<<<<<< HEAD
                 <CustomDatePicker
                   value={date}
                   placeholder={"Alınış Tarihi seçiniz"}
@@ -117,6 +126,17 @@ const InventoryUpdate = () => {
                       new Date().setFullYear(new Date().getFullYear() - 10)
                     )
                   }
+=======
+                <DropDownInput
+                  label={"Envanter Statüsü"}
+                  name={"status"}
+                  value={status}
+                  func={setStatus}
+                  options={[
+                    "Envanter Statüsü",
+                    ...Object.values(InventoryStatus),
+                  ]}
+>>>>>>> f3bd58c72ddc1afb64ecf399f329c302b670708d
                 />
 
                 <div className="mt-10 flex justify-center">

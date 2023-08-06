@@ -6,8 +6,6 @@ import "react-datepicker/dist/react-datepicker.css";
 import TextInput from "../custom_components/TextInput";
 import DropDownInput from "../custom_components/DropDownInput";
 import { Button } from "flowbite-react";
-import { AvailableInventoryStatus, InventoryType } from "../../services/data";
-import CustomDatePicker from "../custom_components/CustomDatePicker";
 
 const InventoryForm = () => {
   const [type, setType] = useState("");
@@ -61,10 +59,7 @@ const InventoryForm = () => {
                   name={"type"}
                   value={type}
                   func={setType}
-                  options={[
-                    { value: "", label: "Envanter Tipi Seçiniz" },
-                    ...Object.values(InventoryType),
-                  ]}
+                  options={types}
                 />
 
                 <TextInput
@@ -91,8 +86,10 @@ const InventoryForm = () => {
                   value={status}
                   func={setStatus}
                   options={[
-                    { value: "", label: "Envanter Statüsü Seçiniz" },
-                    ...Object.values(AvailableInventoryStatus),
+                    "Envanter Statüsü",
+                    "Personalde",
+                    "Ofiste",
+                    "Depoda",
                   ]}
                 />
 
