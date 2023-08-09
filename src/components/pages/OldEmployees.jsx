@@ -30,21 +30,13 @@ const OldEmployees = () => {
 
     if (searchTerms.length === 0) {
       return employees.filter(
-<<<<<<< HEAD
         (employee) => employee.workingStatus === WorkingStatus.NOT_WORKING.label
-=======
-        (employee) => employee.workingStatus === WorkingStatus.NOT_WORKING
->>>>>>> f3bd58c72ddc1afb64ecf399f329c302b670708d
       );
     }
 
     return employees.filter((employee) => {
       return (
-<<<<<<< HEAD
         employee.workingStatus === WorkingStatus.NOT_WORKING.label &&
-=======
-        employee.workingStatus === WorkingStatus.NOT_WORKING &&
->>>>>>> f3bd58c72ddc1afb64ecf399f329c302b670708d
         searchTerms.every((term) => {
           const searchTerm = term.trim();
 
@@ -54,11 +46,7 @@ const OldEmployees = () => {
             employee.tckn.toString().includes(searchTerm) ||
             employee.department.toLowerCase().includes(searchTerm) ||
             employee.mission.toLowerCase().includes(searchTerm) ||
-<<<<<<< HEAD
             employee.workingStatus === WorkingStatus.NOT_WORKING.label
-=======
-            employee.workingStatus === WorkingStatus.NOT_WORKING
->>>>>>> f3bd58c72ddc1afb64ecf399f329c302b670708d
           );
         })
       );

@@ -46,21 +46,13 @@ const EmployeeList = () => {
 
     if (searchTerms.length === 0) {
       return employees.filter(
-<<<<<<< HEAD
         (employee) => employee.workingStatus === WorkingStatus.WORKING.label
-=======
-        (employee) => employee.workingStatus === WorkingStatus.WORKING
->>>>>>> f3bd58c72ddc1afb64ecf399f329c302b670708d
       );
     }
 
     return employees.filter((employee) => {
       return (
-<<<<<<< HEAD
         employee.workingStatus === WorkingStatus.WORKING.label &&
-=======
-        employee.workingStatus === WorkingStatus.WORKING &&
->>>>>>> f3bd58c72ddc1afb64ecf399f329c302b670708d
         searchTerms.every((term) => {
           const searchTerm = term.trim();
           return (

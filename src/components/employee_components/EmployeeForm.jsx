@@ -127,7 +127,12 @@ const EmployeeForm = () => {
                     func={setBirthdate}
                     minDate={
                       new Date(
-                        new Date().setFullYear(new Date().getFullYear() - 10)
+                        new Date().setFullYear(new Date().getFullYear() - 60)
+                      )
+                    }
+                    maxDate={
+                      new Date(
+                        new Date().setFullYear(new Date().getFullYear() - 18)
                       )
                     }
                   />

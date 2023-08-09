@@ -2,7 +2,14 @@ import React from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-const CustomDatePicker = ({ label, minDate, placeholder, value, func }) => {
+const CustomDatePicker = ({
+  label,
+  minDate,
+  maxDate,
+  placeholder,
+  value,
+  func,
+}) => {
   return (
     <div className="form-group">
       <label className="mb-2 text-lg font-medium text-gray-600" htmlFor={label}>
@@ -17,7 +24,7 @@ const CustomDatePicker = ({ label, minDate, placeholder, value, func }) => {
         dateFormat="dd/MM/yyyy"
         required
         placeholderText={placeholder}
-        maxDate={new Date()}
+        maxDate={maxDate || new Date()}
         minDate={minDate}
         showYearDropdown
         scrollableYearDropdown
